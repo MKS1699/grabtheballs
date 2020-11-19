@@ -52,6 +52,7 @@ body {
     align-self: center;
     justify-self: center;
     color: orangered;
+    cursor: pointer;
 }
 
 .gameArena {
@@ -83,6 +84,7 @@ body {
     align-self: flex-end;
     justify-self: center;
     border-radius: 15%;
+    cursor: pointer;
 }
 
 .footer {

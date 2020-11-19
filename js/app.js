@@ -65,10 +65,18 @@ function ballSetup(BALL_NUMBER) {
 }
 function gameOver() {
   game.currentScore = 0;
-  $("#welcomeScreen").toggleClass("hide").html("Restart Game");
+  $(".gameArena").toggleClass("hide");
+  $(".container").css({
+    "grid-template-areas": '"navbar""welcomeScreen""footer"',
+  });
+  $("#welcomeScreen")
+    .toggleClass("hide")
+    .html('Restart <br><span style = "margin-left: 30%;">Game');
   if (parseInt(localStorage.getItem("gameHighScore")) < game.highScore) {
     localStorage.setItem("gameHighScore", game.highScore);
   }
+  window.clearInterval();
+  window.clearTimeout();
 }
 // creating a function to check ball and collector color
 function match(BALL_NUMBER, COLLECTOR_ANGLE) {
@@ -87,6 +95,7 @@ function match(BALL_NUMBER, COLLECTOR_ANGLE) {
     } else {
       game.currentScore += 10;
       $("#currentScore").html(game.currentScore);
+      gameStart();
     }
   } else {
     gameOver();
@@ -103,21 +112,28 @@ function pageDisplay() {
   $(".restart").css({ "font-size": game.fontSize + "px" });
   // showing the highScore
   $("#highScore").html(game.highScore);
+  // setting up game start on click on start game
+  $("#welcomeScreen").on("click", () => {
+    $("#welcomeScreen").toggleClass("hide");
+    $(".container").css({
+      "grid-template-areas": '"navbar""gameArena""footer"',
+    });
+    $(".gameArena").toggleClass("hide");
+    gameStart();
+  });
   // showing the collector
   collectorSetup();
+}
+// creating a function to start the game
+function gameStart() {
+  const BALL_NUMBER = Math.floor(Math.random() * 4);
+  ballSetup(BALL_NUMBER);
+  clearTimeout();
+  setTimeout(() => {
+    match(BALL_NUMBER, game.collector.angle);
+  }, game.level);
 }
 // starting the game when the page is fully loaded.
 $(document).ready(function () {
   pageDisplay();
-  // creating a function to start the game
-  function gameStart() {
-    const BALL_NUMBER = Math.floor(Math.random() * 4);
-    ballSetup(BALL_NUMBER);
-    //   clearTimeout();
-    //   setTimeout(() => {
-    //     match(BALL_NUMBER, game.collector.angle);
-    //   }, game.level);
-  }
-  gameStart();
-  setInterval(gameStart, game.level);
 });
