@@ -13,7 +13,6 @@ let game = {
     startPoint: -Math.floor((window.innerHeight * 80) / 100),
     height: Math.floor((window.innerHeight * 60 * 30 * 35) / 1000000),
     endPoint: -Math.floor((window.innerHeight * 80 * 30) / 10000),
-    currenPos: this.startPoint,
   },
 };
 // setting up collector
@@ -26,7 +25,7 @@ function collectorSetup() {
     "border-left": game.collector.height + "px solid yellow",
   });
   // rotating the collector 90 deg with each click
-  $("#collector").click(function () {
+  $("#collector").on("click", function () {
     // checking collector angle
     if (game.collector.angle == 360) {
       game.collector.angle = 0;
@@ -61,7 +60,6 @@ function ballSetup(BALL_NUMBER) {
   }
   // dropping the ball
   $("#ball").animate({ top: game.ball.endPoint + "px" }, game.level);
-  game.ball.currenPos = game.ball.endPoint;
 }
 // creating a function to check ball and collector color
 function match(BALL_NUMBER, COLLECTOR_ANGLE) {
@@ -82,6 +80,7 @@ function match(BALL_NUMBER, COLLECTOR_ANGLE) {
     game.highScore = game.currentScore;
     $("#highScore").html(game.highScore);
   }
+  $("#ball").css({ top: game.ball.startPointl + "px" });
 }
 // starting the game when the page is fully loaded.
 $(document).ready(function () {
@@ -92,15 +91,11 @@ $(document).ready(function () {
   // creating a function to start the game
   function gameStart() {
     const BALL_NUMBER = Math.floor(Math.random() * 4);
-    if (game.ball.currenPos == game.ball.startPoint) {
-      ballSetup(BALL_NUMBER);
-    }
+    ballSetup(BALL_NUMBER);
     clearTimeout();
     setTimeout(() => {
       match(BALL_NUMBER, game.collector.angle);
     }, game.level);
-    $("#ball").animate({ top: game.ball.startPoint + "px" }, game.level / 10);
-    game.ball.currenPos = game.ball.startPoint;
   }
   gameStart();
   setInterval(gameStart, game.level);
