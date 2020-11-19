@@ -1,6 +1,6 @@
 // console.log("js connected.");
 
-// setting up page display
+// setting up game
 function gameSetup() {
   // setting up font sizes of different elements respective to screen sizes
   $("#highScore").css({ "font-size": game.fontSize + "px" });
@@ -20,15 +20,6 @@ function gameSetup() {
     $(".gameArena").toggleClass("hide");
     gameStart();
   });
-}
-
-// creating a function to start the game
-function gameStart() {
-  const BALL_NUMBER = Math.floor(Math.random() * 4);
-  ballSetup(BALL_NUMBER);
-  setTimeout(() => {
-    match(BALL_NUMBER, game.collector.angle);
-  }, game.level);
 }
 
 // starting the game when the page is fully loaded.
