@@ -34,10 +34,10 @@ $(document).ready(function () {
       if (game.collector.angle == 360) {
         game.collector.angle = 0;
       }
-      // rotaing the collector 90 deg with each click.
-      $(this).css({ transform: "rotate(" + game.collector.angle + "deg)" });
       // changing the collector angle value to which it is rotated.
       game.collector.angle += 90;
+      // rotaing the collector 90 deg with each click.
+      $(this).css({ transform: "rotate(" + game.collector.angle + "deg)" });
     });
   }
   // ball setup
@@ -63,6 +63,7 @@ $(document).ready(function () {
           "Erorr while generating ball color. Please reload the page."
         );
     }
+    // dropping the ball
     $("#ball").animate({ top: game.ball.endPoint + "px" }, game.level);
   }
   // crating a function to check ball and collector color
@@ -75,6 +76,7 @@ $(document).ready(function () {
     ) {
       game.currentScore += 10;
       $("#currentScore").html(game.currentScore);
+      // taking ball back to its original position
       $("#ball").animate({ top: game.ball.startPoint + "px" }, game.level / 10);
     } else {
       alert("Game Over");
@@ -94,8 +96,8 @@ $(document).ready(function () {
     collectorSetup();
     const BALL_NUMBER = Math.floor(Math.random() * 4);
     ballSetup(BALL_NUMBER);
-    // const matching = match(BALL_NUMBER, game.collector.angle);
-    setInterval(match(BALL_NUMBER, game.collector.angle), game.level);
+    const matching = match(BALL_NUMBER, game.collector.angle);
+    setTimeout(matching, game.level);
   }
   gameStart();
 });
