@@ -70,15 +70,17 @@ function match(BALL_NUMBER, COLLECTOR_ANGLE) {
     (BALL_NUMBER == 2 && COLLECTOR_ANGLE == 180) ||
     (BALL_NUMBER == 3 && COLLECTOR_ANGLE == 90)
   ) {
-    game.currentScore += 10;
-    $("#currentScore").html(game.currentScore);
+    if (game.highScore == 0 || game.highScore == game.currentScore) {
+      game.currentScore += 10;
+      game.highScore = game.currentScore;
+      $("#highScore").html(game.highScore);
+      $("#currentScore").html(game.currentScore);
+    } else {
+      game.currentScore += 10;
+      $("#currentScore").html(game.currentScore);
+    }
   } else {
     alert("Game Over");
-  }
-
-  if (game.highScore == 0 || game.highScore == game.currentScore) {
-    game.highScore = game.currentScore;
-    $("#highScore").html(game.highScore);
   }
   $("#ball").css({ top: game.ball.startPointl + "px" });
 }
