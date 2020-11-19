@@ -96,8 +96,9 @@ $(document).ready(function () {
     collectorSetup();
     const BALL_NUMBER = Math.floor(Math.random() * 4);
     ballSetup(BALL_NUMBER);
-    const matching = match(BALL_NUMBER, game.collector.angle);
-    setTimeout(matching, game.level);
+    setTimeout(() => {
+      match(BALL_NUMBER, game.collector.angle);
+    }, game.level);
   }
   gameStart();
 });
