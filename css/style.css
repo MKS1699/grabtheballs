@@ -97,3 +97,7 @@ body {
     align-self: center;
     justify-self: center;
 }
+
+.hide{
+    display : none;
+}

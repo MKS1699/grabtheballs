@@ -2,7 +2,9 @@
 // creating game object with all the details required to start the game.
 let game = {
   fontSize: Math.floor((window.innerHeight * 15) / 100),
-  highScore: 0,
+  highScore: localStorage.gameHighScore
+    ? parseInt(localStorage.gameHighScore)
+    : 0,
   currentScore: 0,
   level: 5000,
   collector: {
@@ -61,6 +63,13 @@ function ballSetup(BALL_NUMBER) {
   // dropping the ball
   $("#ball").animate({ top: game.ball.endPoint + "px" }, game.level);
 }
+function gameOver() {
+  game.currentScore = 0;
+  $("#welcomeScreen").toggleClass("hide");
+  if (parseInt(localStorage.getItem("gameHighScore")) < game.highScore) {
+    localStorage.setItem("gameHighScore", game.highScore);
+  }
+}
 // creating a function to check ball and collector color
 function match(BALL_NUMBER, COLLECTOR_ANGLE) {
   if (
@@ -80,15 +89,19 @@ function match(BALL_NUMBER, COLLECTOR_ANGLE) {
       $("#currentScore").html(game.currentScore);
     }
   } else {
-    alert("Game Over");
+    gameOver();
   }
   $("#ball").css({ top: game.ball.startPointl + "px" });
 }
 // starting the game when the page is fully loaded.
 $(document).ready(function () {
+  // setting up font sizes of different elements respective to screen sizes
   $("#highScore").css({ "font-size": game.fontSize + "px" });
   $("#currentScore").css({ "font-size": game.fontSize / 2 + "px" });
   $(".restart").css({ "font-size": game.fontSize + "px" });
+  // showing the highScore
+  $("#highScore").html(game.highScore);
+  // showing the collector
   collectorSetup();
   // creating a function to start the game
   function gameStart() {
