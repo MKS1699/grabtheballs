@@ -1,4 +1,5 @@
 // console.log("js connected.");
+
 // creating game object with all the details required to start the game.
 let game = {
   fontSize: Math.floor((window.innerHeight * 15) / 100),
@@ -17,6 +18,7 @@ let game = {
     endPoint: -Math.floor((window.innerHeight * 80 * 30) / 10000),
   },
 };
+
 // setting up collector
 function collectorSetup() {
   //drawing collector with 30% to the gameArena which is 60% to the body.
@@ -37,6 +39,7 @@ function collectorSetup() {
     $(this).css({ transform: "rotate(" + game.collector.angle + "deg)" });
   });
 }
+
 // setting up ball
 function ballSetup(BALL_NUMBER) {
   // setting up ball's starting point
@@ -63,8 +66,11 @@ function ballSetup(BALL_NUMBER) {
   // dropping the ball
   $("#ball").animate({ top: game.ball.endPoint + "px" }, game.level);
 }
+
+// gameOver function
 function gameOver() {
   game.currentScore = 0;
+  $("#currentScore").html(game.currentScore);
   $(".gameArena").toggleClass("hide");
   $(".container").css({
     "grid-template-areas": '"navbar""welcomeScreen""footer"',
@@ -75,9 +81,8 @@ function gameOver() {
   if (parseInt(localStorage.getItem("gameHighScore")) < game.highScore) {
     localStorage.setItem("gameHighScore", game.highScore);
   }
-  window.clearInterval();
-  window.clearTimeout();
 }
+
 // creating a function to check ball and collector color
 function match(BALL_NUMBER, COLLECTOR_ANGLE) {
   if (
@@ -92,6 +97,7 @@ function match(BALL_NUMBER, COLLECTOR_ANGLE) {
       game.highScore = game.currentScore;
       $("#highScore").html(game.highScore);
       $("#currentScore").html(game.currentScore);
+      gameStart();
     } else {
       game.currentScore += 10;
       $("#currentScore").html(game.currentScore);
@@ -124,6 +130,7 @@ function pageDisplay() {
   // showing the collector
   collectorSetup();
 }
+
 // creating a function to start the game
 function gameStart() {
   const BALL_NUMBER = Math.floor(Math.random() * 4);
@@ -133,6 +140,7 @@ function gameStart() {
     match(BALL_NUMBER, game.collector.angle);
   }, game.level);
 }
+
 // starting the game when the page is fully loaded.
 $(document).ready(function () {
   pageDisplay();
