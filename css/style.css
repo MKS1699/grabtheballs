@@ -73,6 +73,7 @@ body {
     height: 0;
     border-radius: 50%;
     border: 50px solid black;
+    z-index: -1;
 }
 
 #collector {
