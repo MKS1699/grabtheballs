@@ -65,7 +65,7 @@ function ballSetup(BALL_NUMBER) {
 }
 function gameOver() {
   game.currentScore = 0;
-  $("#welcomeScreen").toggleClass("hide");
+  $("#welcomeScreen").toggleClass("hide").html("Restart Game");
   if (parseInt(localStorage.getItem("gameHighScore")) < game.highScore) {
     localStorage.setItem("gameHighScore", game.highScore);
   }
@@ -93,24 +93,30 @@ function match(BALL_NUMBER, COLLECTOR_ANGLE) {
   }
   $("#ball").css({ top: game.ball.startPointl + "px" });
 }
-// starting the game when the page is fully loaded.
-$(document).ready(function () {
+
+// setting up page display
+function pageDisplay() {
   // setting up font sizes of different elements respective to screen sizes
   $("#highScore").css({ "font-size": game.fontSize + "px" });
+  $("#welcomeScreen").css({ "font-size": game.fontSize + "px" });
   $("#currentScore").css({ "font-size": game.fontSize / 2 + "px" });
   $(".restart").css({ "font-size": game.fontSize + "px" });
   // showing the highScore
   $("#highScore").html(game.highScore);
   // showing the collector
   collectorSetup();
+}
+// starting the game when the page is fully loaded.
+$(document).ready(function () {
+  pageDisplay();
   // creating a function to start the game
   function gameStart() {
     const BALL_NUMBER = Math.floor(Math.random() * 4);
     ballSetup(BALL_NUMBER);
-    clearTimeout();
-    setTimeout(() => {
-      match(BALL_NUMBER, game.collector.angle);
-    }, game.level);
+    //   clearTimeout();
+    //   setTimeout(() => {
+    //     match(BALL_NUMBER, game.collector.angle);
+    //   }, game.level);
   }
   gameStart();
   setInterval(gameStart, game.level);

@@ -17,7 +17,7 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 8fr 1fr;
     grid-template-areas:    "navbar" 
-                            "gameArena"
+                            "welcomeScreen"
                             "footer";
 }
 
@@ -45,6 +45,13 @@ body {
     grid-area: currentScore;
     align-self: center;
     justify-self: center;
+}
+
+#welcomeScreen {
+    grid-area : welcomeScreen;
+    align-self: center;
+    justify-self: center;
+    color: orangered;
 }
 
 .gameArena {
